@@ -2,13 +2,13 @@
 
 Name of feature: _____Asynchronous code, and APIs__________
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: _4hrs____
 
 Start time: _2:30 pm____
 
-Finish time: _____
+Finish time: _8:00 pm____
 
-Actual time needed to complete: _____
+Actual time needed to complete: _5.5 hrs____
 
 
 **Author**:  Tiffani Rice
