@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 class App extends React.Component {
   constructor(props){
@@ -13,7 +14,7 @@ class App extends React.Component {
 
   handleCitySubmit = async (e) => {
     e.preventDefault();
-    let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=Seattle&format=json`;
+    let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.cityName}&format=json`;
     
     let cityData = await axios.get(url);    
     this.setState ({
@@ -28,25 +29,36 @@ class App extends React.Component {
   }
 
   render () {
+let mapURL = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityExplorerData?.lat},${this.state.cityExplorerData?.lon}&zoom=11`
+
     return (
       <>
-      <h1> Data from an API </h1>
+      <h1> City Explorer! </h1>
       <form onSubmit={this.handleCitySubmit}>
-        <label> Search for a City:
-          <input name="city"/>
+        <label id="label"> Search for a City:
+          <input onChange={this.changeCityInput} name="city"/>
         </label>
         <button type="submit"> Explore!</button>
       </form>
 
-      <Card style={{ width: '18rem' }}>
+      <Card className='card' style={{ width: '30rem' }}>
       <Card.Img variant="top" src="" />
-      <Card.Body>
-        <Card.Title>City Name: {this.state.cityExplorerData?.display_name}</Card.Title>
+      <Card.Body className="cardContainer">
+        <Card.Title className="cardTitle">City Name: {this.state.cityExplorerData?.display_name}</Card.Title>
         <Card.Text>
           <ul>
             <li> Latitude: {this.state.cityExplorerData?.lat}</li>
             <li> Longitude: {this.state.cityExplorerData?.lon}</li>
           </ul>
+
+          <div> 
+            <iframe
+              src={mapURL}
+              className='w-100'
+              height='500'
+              title='map'
+          ></iframe>
+          </div>
         </Card.Text>
       </Card.Body>
     </Card>
