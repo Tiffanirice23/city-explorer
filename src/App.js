@@ -3,6 +3,7 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import Weather from './Weather.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,12 +11,22 @@ class App extends React.Component {
     this.state = {
       value: '',
       cityData: {},
-      error: false
+      error: false,
+      location: '',
+      forecastData: [],
     }
   }
 
   handleCitySubmit = async (e) => {
     e.preventDefault();
+
+    // Clear out old data in case of error on new request
+    this.setState({
+      forecastData: [],
+      location: '',
+      cityExplorerData: {},
+    });
+
     let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.cityName}&format=json`;
 
     let cityData;
@@ -23,8 +34,11 @@ class App extends React.Component {
 
     try {
       cityData = await axios.get(url);
+      let getWeather = await axios.get(`http://localhost:3001/weather?searchquery=${this.state.cityName}`);
       this.setState({
         cityExplorerData: cityData.data[0],
+        location: cityData.data[0].display_name,
+        forecastData: getWeather.data,
         error: false // set error to false if the API request is successful
       });
     } catch (error) {
@@ -37,7 +51,6 @@ class App extends React.Component {
       cityExplorerData: cityData.data[0]
     });
   }
-  
   
 
   changeCityInput = (e) => {
@@ -59,7 +72,7 @@ class App extends React.Component {
           <button type="submit"> Explore!</button>
         </form>
 
-        {this.state.error && <p>An error has occurred!</p>} 
+        {this.state.error && <p>An error has occured! Please try again.</p>} 
         <Card className='card' style={{ width: '30rem' }}>
           <Card.Img variant="top" src="" />
           <Card.Body className="cardContainer">
@@ -68,7 +81,10 @@ class App extends React.Component {
               <ul>
                 <li> Latitude: {this.state.cityExplorerData?.lat}</li>
                 <li> Longitude: {this.state.cityExplorerData?.lon}</li>
+                
               </ul>
+
+              {this.state.forecastData && <Weather forecastData={this.state.forecastData} />}
 
               <div>
                 <iframe
