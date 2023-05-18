@@ -41,4 +41,7 @@ h1 {
   color:rgb(32, 0, 195);
 }
 
-div {}
+#mapID {
+  /* border: 3px solid black; */
+  margin-left: 75px;
+}
