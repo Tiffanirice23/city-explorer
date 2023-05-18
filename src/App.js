@@ -3,8 +3,8 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Weather from './Weather.js';
-import Movies from './Movies.js';
+import Weather from './Weather/Weather.js';
+import Movies from './Movies/Movies.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,7 +15,9 @@ class App extends React.Component {
       error: false,
       location: '',
       forecastData: [],
-      movies: []
+      movies: [],
+      lat: '',
+      lon: ''
     }
   }
 
@@ -36,15 +38,16 @@ class App extends React.Component {
 
     try {
       cityData = await axios.get(url);
-      console.log('++++++++++++', cityData.data[0].lat);
-      
+      // console.log('++++++++++++', cityData.data[0].lat);
+
       let getWeather = `${process.env.REACT_APP_SERVER}/weather?lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`;
+
 
       let weatherData = await axios.get(getWeather);
 
-      let getMovieURL = `${process.env.REACT_APP_SERVER}/movie?city=${this.state.cityName}`;
-
-      let movieData =  await axios.get(getMovieURL);
+      let getMovieURL = `${process.env.REACT_APP_SERVER}/movies?cityName=${this.state.cityName}`;
+      // console.log(getMovieURL);
+      let movieData = await axios.get(getMovieURL);
 
       this.setState({
         cityExplorerData: cityData.data[0],
@@ -63,7 +66,7 @@ class App extends React.Component {
       cityExplorerData: cityData.data[0]
     });
   }
-  
+
 
   changeCityInput = (e) => {
     this.setState({
@@ -84,25 +87,25 @@ class App extends React.Component {
           <button type="submit"> Explore!</button>
         </form>
 
-        {this.state.error && <p>An error has occured! Please try again.</p>} 
-        <Card className='card' style={{ width: '30rem' }}>
+      
+        {this.state.error && <h1>An error has occured! Please try again.</h1>}
+        <Card className='card' style={{ width: '50rem' }}>
           <Card.Img variant="top" src="" />
           <Card.Body className="cardContainer">
             <Card.Title className="cardTitle">City Name: {this.state.cityExplorerData?.display_name}</Card.Title>
-            <Card.Text>
-              <div>
+            <Card.Text as="div"> 
+              <div id="mapID">
                 <iframe
                   src={mapURL}
                   className='w-100'
-                  height='500'
-                  // width='800'
+                  height='650'
                   title='map'
-                  ></iframe>
-                  <ul>
-                    <li> Latitude: {this.state.cityExplorerData?.lat}</li>
-                    <li> Longitude: {this.state.cityExplorerData?.lon}</li>
-                    
-                  </ul>
+                ></iframe>
+                <ul>
+                  <li> Latitude: {this.state.cityExplorerData?.lat}</li>
+                  <li> Longitude: {this.state.cityExplorerData?.lon}</li>
+
+                </ul>
               </div>
             </Card.Text>
           </Card.Body>
@@ -112,10 +115,11 @@ class App extends React.Component {
           <Card.Img variant="top" src="" />
           <Card.Body className="cardContainer">
             <Card.Title className="cardTitle">5 Day Weather Forecast</Card.Title>
-            <Card.Text>
+            <Card.Text as="div"> 
 
               {this.state.forecastData && <Weather forecastData={this.state.forecastData} />
-  }       </Card.Text>
+              }       
+              </Card.Text>
           </Card.Body>
         </Card>
 
@@ -123,9 +127,9 @@ class App extends React.Component {
         <Card className='card' style={{ width: '30rem' }}>
           <Card.Body className="cardContainer">
             <Card.Title className="cardTitle">Movies in this City</Card.Title>
-            <Card.Text>
-            {this.state.movies && <Movies movies={this.state.movies} />}
-            {this.state.movies.length === 0 && 'No movies found'}
+            <Card.Text as="div"> 
+              {this.state.movies && <Movies movies={this.state.movies} />}
+              {this.state.movies.length === 0 && 'No movies found'}
             </Card.Text>
           </Card.Body>
         </Card>
