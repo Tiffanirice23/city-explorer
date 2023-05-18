@@ -34,11 +34,17 @@ class App extends React.Component {
 
     try {
       cityData = await axios.get(url);
-      let getWeather = await axios.get(`${process.env.REACT_APP_SERVER}/weather?searchquery=${this.state.cityName}`);
+      // console.log('++++++++++++', cityData);
+      console.log('++++++++++++', cityData.data[0].lat);
+      
+      let getWeather = `${process.env.REACT_APP_SERVER}/weather?lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`;
+
+      let weatherData = await axios.get(getWeather);
+
       this.setState({
         cityExplorerData: cityData.data[0],
         location: cityData.data[0].display_name,
-        forecastData: getWeather.data,
+        forecastData: weatherData.data,
         error: false // set error to false if the API request is successful
       });
     } catch (error) {
