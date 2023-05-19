@@ -17,126 +17,134 @@ class App extends React.Component {
       forecastData: [],
       movies: [],
       lat: '',
-      lon: ''
+      lon: '',
+      errorMessage: '',
     }
   }
 
   handleCitySubmit = async (e) => {
     e.preventDefault();
 
-    // Clear out old data in case of error on new request
-    this.setState({
-      forecastData: [],
-      location: '',
-      cityExplorerData: {},
-    });
-
-    let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.cityName}&format=json`;
-
+    // // Clear out old data in case of error on new request
+    // this.setState({
+    //   forecastData: [],
+    //   location: '',
+    //   cityExplorerData: {},
+    // });
     let cityData;
-
-
     try {
+      let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.cityName}&format=json`;
       cityData = await axios.get(url);
-      // console.log('++++++++++++', cityData.data[0].lat);
-
-      let getWeather = `${process.env.REACT_APP_SERVER}/weather?lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`;
-
-
-      let weatherData = await axios.get(getWeather);
-
-      let getMovieURL = `${process.env.REACT_APP_SERVER}/movies?cityName=${this.state.cityName}`;
-      // console.log(getMovieURL);
-      let movieData = await axios.get(getMovieURL);
-
       this.setState({
-        cityExplorerData: cityData.data[0],
+        // cityExplorerData: cityData.data[0],
         location: cityData.data[0].display_name,
-        forecastData: weatherData.data,
-        movies: movieData.data,
+        lat: cityData.data[0].lat,
+        lon: cityData.data[0].lon,
         error: false // set error to false if the API request is successful
       });
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      console.log(e.message);
       this.setState({
-        error: true // set error to true if the API request fails
-      });
+        errorMessage: e.message
+      })
     }
+    this.getWeather(cityData.data[0].lat, cityData.data[0].lon);
+    this.getMovies();
+  }
+
+  getWeather = async (lat, lon) => {
+  try {
+    let url = await axios.get(`${process.env.REACT_APP_SERVER}/weather?lat=${lat}&lon=${lon}`);
     this.setState({
-      cityExplorerData: cityData.data[0]
+      forecastData: url.data
+    })
+  } catch (error) {
+    // console.error('Error from weather function', error.message);
+    this.setState({
+      error: true // set error to true if the API request fails
     });
   }
+}
 
-
-  changeCityInput = (e) => {
+getMovies = async () => {
+  try {
+    let request = await axios.get(`${process.env.REACT_APP_SERVER}/movies?cityName=${this.state.cityName}`);
     this.setState({
-      cityName: e.target.value
+      movies: request.data,
     })
+  } catch (e) {
+    this.setState({
+      error: true // set error to true if the API request fails
+    });
   }
-
-  render() {
-    let mapURL = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityExplorerData?.lat},${this.state.cityExplorerData?.lon}&zoom=11`
-
-    return (
-      <>
-        <h1> City Explorer! </h1>
-        <form onSubmit={this.handleCitySubmit}>
-          <label id="label"> Search for a City:
-            <input onChange={this.changeCityInput} name="city" />
-          </label>
-          <button type="submit"> Explore!</button>
-        </form>
-
-      
-        {this.state.error && <h1>An error has occured! Please try again.</h1>}
-        <Card className='card' style={{ width: '50rem' }}>
-          <Card.Img variant="top" src="" />
-          <Card.Body className="cardContainer">
-            <Card.Title className="cardTitle">City Name: {this.state.cityExplorerData?.display_name}</Card.Title>
-            <Card.Text as="div"> 
-              <div id="mapID">
-                <iframe
-                  src={mapURL}
-                  className='w-100'
-                  height='650'
-                  title='map'
-                ></iframe>
-                <ul>
-                  <li> Latitude: {this.state.cityExplorerData?.lat}</li>
-                  <li> Longitude: {this.state.cityExplorerData?.lon}</li>
-
-                </ul>
-              </div>
-            </Card.Text>
-          </Card.Body>
-        </Card>
-
-        <Card className='card' style={{ width: '30rem' }}>
-          <Card.Img variant="top" src="" />
-          <Card.Body className="cardContainer">
-            <Card.Title className="cardTitle">5 Day Weather Forecast</Card.Title>
-            <Card.Text as="div"> 
-
-              {this.state.forecastData && <Weather forecastData={this.state.forecastData} />
-              }       
-              </Card.Text>
-          </Card.Body>
-        </Card>
+}
 
 
-        <Card className='card' style={{ width: '30rem' }}>
-          <Card.Body className="cardContainer">
-            <Card.Title className="cardTitle">Movies in this City</Card.Title>
-            <Card.Text as="div"> 
-              {this.state.movies && <Movies movies={this.state.movies} />}
-              {this.state.movies.length === 0 && 'No movies found'}
-            </Card.Text>
-          </Card.Body>
-        </Card>
 
-      </>
-    );
-  }
+changeCityInput = (e) => {
+  this.setState({
+    cityName: e.target.value
+  })
+}
+
+render() {
+  let mapURL = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.lat},${this.state.lon}&zoom=11`
+
+  return (
+    <>
+      <h1> City Explorer! </h1>
+      <form onSubmit={this.handleCitySubmit}>
+        <label id="label"> Search for a City:
+          <input onChange={this.changeCityInput} name="city" />
+        </label>
+        <button type="submit"> Explore!</button>
+      </form>
+
+
+      {this.state.error && <h1>An error has occured! Please try again.</h1>}
+      <Card className='card'>
+        <Card.Body className="cardContainer">
+          <Card.Title className="cardTitle">City Name: {this.state.cityName}</Card.Title>
+          {this.state.lat && <Card.Text>Latitude: {this.state.lat}, Longitude: {this.state.lon}</Card.Text>}
+          <Card.Text as="div">
+            <div id="mapID">
+              <iframe
+                src={mapURL}
+                height='650px'
+                width='650px'
+                title='map'
+              ></iframe>
+            </div>
+          </Card.Text>
+        </Card.Body>
+      </Card>
+
+      <Card className='card'>
+        <Card.Body className="cardContainer">
+          <Card.Title className="cardTitle">5 Day Weather Forecast</Card.Title>
+          <Card.Text as="div">
+
+            {/* {this.state.forecastData && <Weather forecastData={this.state.forecastData} />
+            } */}
+            <Weather forecastData={this.state.forecastData} />
+          </Card.Text>
+        </Card.Body>
+      </Card>
+
+
+      <Card className='card movieCard'>
+        <Card.Body className="cardContainer">
+          <Card.Title className="cardTitle">Movies in this City</Card.Title>
+          <Card.Text as="div">
+            {this.state.movies && <Movies movies={this.state.movies} />}
+            {this.state.movies.length === 0 && 'No movies found'}
+          </Card.Text>
+        </Card.Body>
+      </Card>
+
+    </>
+  );
+}
 }
 
 export default App;

@@ -1,6 +1,6 @@
 # City-Explorer
 
-Name of feature: _____Asynchronous code, and APIs__________
+Name of feature: _____Refactoring into Modules__________
 
 Estimate of time needed to complete: _4hrs____
 
