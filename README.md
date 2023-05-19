@@ -6,9 +6,9 @@ Estimate of time needed to complete: _4hrs____
 
 Start time: _2:30 pm____
 
-Finish time: _8:00 pm____
+Finish time: _7:30 pm____
 
-Actual time needed to complete: _5.5 hrs____
+Actual time needed to complete: _5 hrs____
 
 
 **Author**:  Tiffani Rice
