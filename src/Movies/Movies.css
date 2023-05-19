@@ -1,3 +1,16 @@
+.movie {
+  margin-bottom: 20px;
+  padding-bottom: 30px;
+  max-width: 33%;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  padding: 10px;
+}
+
 .movieImg {
-  width: 100%;
+  width: 80%;
+  max-height: 300px;
+  object-fit: cover;
+  margin-bottom: 10px;
 }

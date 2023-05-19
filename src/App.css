@@ -7,6 +7,7 @@ body {
   background-color: rgb(155, 238, 195);
   /* text-align: center; */
   font-weight:700;
+  padding-bottom: 20px;
 }
 
 .cardTitle {
@@ -43,5 +44,19 @@ h1 {
 
 #mapID {
   /* border: 3px solid black; */
-  margin-left: 75px;
+}
+
+.card {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.cardTitle {
+  margin-bottom: 20px;
+}
+
+iframe {
+  margin: 0 auto;
+  position: relative;
+  display: block;
 }
