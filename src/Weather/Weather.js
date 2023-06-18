@@ -3,6 +3,7 @@ import './Weather.css';
 
 class Weather extends React.Component {
   render() {
+
     return (
       <>
         {this.props.forecastData.map(day => (
