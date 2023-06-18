@@ -3,7 +3,7 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Weather from './Weather/Weather.js';
+// import Weather from './Weather/Weather.js';
 import Movies from './Movies/Movies.js';
 
 class App extends React.Component {
