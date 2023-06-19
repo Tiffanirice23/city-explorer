@@ -3,7 +3,7 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Weather from './Weather/Weather.js';
+// import Weather from './Weather/Weather.js';
 import Movies from './Movies/Movies.js';
 
 class App extends React.Component {
@@ -56,7 +56,7 @@ class App extends React.Component {
   try {
     let url = await axios.get(`${process.env.REACT_APP_SERVER}/weather?lat=${lat}&lon=${lon}`);
     this.setState({
-      forecastData: url.data
+      forecastData: url.data || []
     })
   } catch (error) {
     // console.error('Error from weather function', error.message);
@@ -119,17 +119,14 @@ render() {
         </Card.Body>
       </Card>
 
-      <Card className='card'>
+      {/* <Card className='card'>
         <Card.Body className="cardContainer">
           <Card.Title className="cardTitle">5 Day Weather Forecast</Card.Title>
           <Card.Text as="div">
-
-            {/* {this.state.forecastData && <Weather forecastData={this.state.forecastData} />
-            } */}
             <Weather forecastData={this.state.forecastData} />
           </Card.Text>
         </Card.Body>
-      </Card>
+      </Card> */}
 
 
       <Card className='card movieCard'>
