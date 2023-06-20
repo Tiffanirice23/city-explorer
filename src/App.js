@@ -3,7 +3,7 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Weather from './Weather/Weather.js';
+// import Weather from './Weather/Weather.js';
 import Movies from './Movies/Movies.js';
 
 class App extends React.Component {
@@ -48,7 +48,7 @@ class App extends React.Component {
         errorMessage: e.message
       })
     }
-    this.getWeather(cityData.data[0].lat, cityData.data[0].lon);
+    // this.getWeather(cityData.data[0].lat, cityData.data[0].lon);
     this.getMovies();
   }
 
@@ -56,7 +56,7 @@ class App extends React.Component {
   try {
     let url = await axios.get(`${process.env.REACT_APP_SERVER}/weather?lat=${lat}&lon=${lon}`);
     this.setState({
-      forecastData: url.data
+      forecastData: url.data || []
     })
   } catch (error) {
     // console.error('Error from weather function', error.message);
@@ -88,8 +88,8 @@ changeCityInput = (e) => {
 }
 
 render() {
-  let mapURL = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.lat},${this.state.lon}&zoom=11`
-
+  const { lat, lon } = this.state;
+  let mapURL = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${lat},${lon}&zoom=11`
   return (
     <>
       <h1> City Explorer! </h1>
@@ -101,35 +101,32 @@ render() {
       </form>
 
 
-      {this.state.error && <h1>An error has occured! Please try again.</h1>}
+      {/* {this.state.error && <h1>An error has occured! Please try again.</h1>} */}
       <Card className='card'>
         <Card.Body className="cardContainer">
           <Card.Title className="cardTitle">City Name: {this.state.cityName}</Card.Title>
           {this.state.lat && <Card.Text>Latitude: {this.state.lat}, Longitude: {this.state.lon}</Card.Text>}
           <Card.Text as="div">
             <div id="mapID">
-              <iframe
+              {lat && lon && <iframe
                 src={mapURL}
                 height='650px'
                 width='650px'
                 title='map'
-              ></iframe>
+              ></iframe>}
             </div>
           </Card.Text>
         </Card.Body>
       </Card>
 
-      <Card className='card'>
+      {/* <Card className='card'>
         <Card.Body className="cardContainer">
           <Card.Title className="cardTitle">5 Day Weather Forecast</Card.Title>
           <Card.Text as="div">
-
-            {/* {this.state.forecastData && <Weather forecastData={this.state.forecastData} />
-            } */}
             <Weather forecastData={this.state.forecastData} />
           </Card.Text>
         </Card.Body>
-      </Card>
+      </Card> */}
 
 
       <Card className='card movieCard'>
