@@ -1,18 +1,35 @@
 import React from 'react';
 import './Movies.css';
+import { Card } from 'react-bootstrap';
 
 class Movies extends React.Component {
   render() {
-    // console.log('movies', this.props.movies);
     return (
       <>
-        {this.props.movies.slice(0,12).map(movie => (
-          <div className="movie" key={`${movie.title}.${movie.release}`}>
-            <img className='movieImg' src={`https://image.tmdb.org/t/p/w500${movie.image_url}`} alt="MovieImages" />
-            <div>Released: {movie.release}</div>
-            <h2>{movie.title}</h2>
-            <p>{movie.overview}</p>
-          </div>
+        {this.props.movies.slice(0,30).map(movie => (
+          <Card 
+            key={`${movie.title}.${movie.release}`}
+              className='insideMovieCard'>
+            <Card.Title 
+              className='movieTitle'>
+              {movie.title}
+            </Card.Title>
+            {movie.image_url ? (
+              <Card.Img
+                className='movieImg' 
+                src={`https://image.tmdb.org/t/p/w500${movie.image_url}`} 
+                alt="MovieImages" 
+              /> 
+              ):( 
+                ''
+                )}
+              <Card.Text className='movieReleased'> 
+                  Released: {movie.release}
+              </Card.Text>
+              <Card.Text className='movieOverview'>
+                {movie.overview}
+              </Card.Text>
+            </Card>
         ))}
       </>
     );

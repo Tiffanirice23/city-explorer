@@ -1,16 +1,35 @@
-.movie {
+
+
+.movieImg {
+  max-width: 400px;
+  max-height: 400px;
+  margin: 0 auto;
   margin-bottom: 20px;
-  padding-bottom: 30px;
-  max-width: 33%;
-  display: inline-block;
-  vertical-align: top;
-  text-align: center;
+}
+
+.insideMovieCard {
+  margin-bottom: 30px;
+ border: 2px solid rgb(57, 56, 56);
+}
+
+.movieReleased, .movieOverview {
   padding: 10px;
 }
 
-.movieImg {
-  width: 80%;
-  max-height: 300px;
-  object-fit: cover;
-  margin-bottom: 10px;
+.movieOverview {
+  border: 2px solid #283618;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 10px !important;
+}
+
+.movieReleased {
+  margin-left: 35px;
+}
+
+.movieTitle {
+  margin: 0 auto;
+  font-weight: 800;
+  font-size: 30px;
+  color:#bc6c25;
 }
