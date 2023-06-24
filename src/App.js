@@ -72,6 +72,7 @@ getMovies = async () => {
     this.setState({
       movies: request.data,
     })
+    console.log(request.data);
   } catch (e) {
     this.setState({
       error: true // set error to true if the API request fails
@@ -92,30 +93,35 @@ render() {
   let mapURL = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${lat},${lon}&zoom=11`
   return (
     <>
-      <h1> City Explorer! </h1>
-      <form onSubmit={this.handleCitySubmit}>
-        <label id="label"> Search for a City:
-          <input onChange={this.changeCityInput} name="city" />
-        </label>
-        <button type="submit"> Explore!</button>
-      </form>
+      <div className='exploreDiv'>
+        <h1 className='cityExplorerH1'> 
+        <form onSubmit={this.handleCitySubmit}>
+          <label className="cityExplorerLabel"> Enter a City & Get Started:
+            <input className='seachCityInput' onChange={this.changeCityInput} name="city" />
+          </label>
+           <button type="submit" className="exploreBtn"> Explore!</button>
+        </form>
+        </h1>
+      </div>
 
-
-      {/* {this.state.error && <h1>An error has occured! Please try again.</h1>} */}
-      <Card className='card'>
-        <Card.Body className="cardContainer">
-          <Card.Title className="cardTitle">City Name: {this.state.cityName}</Card.Title>
-          {this.state.lat && <Card.Text>Latitude: {this.state.lat}, Longitude: {this.state.lon}</Card.Text>}
+      <Card className='mapCard'>
+        <Card.Body className="mapCardContainer">
+          <Card.Title   
+            className="mapCardTitle">City Name: {this.state.cityName}</Card.Title>
           <Card.Text as="div">
-            <div id="mapID">
+            <div>
               {lat && lon && <iframe
                 src={mapURL}
-                height='650px'
-                width='650px'
+                className="mapId"
+                height='612px'
+                width='612px'
                 title='map'
               ></iframe>}
             </div>
           </Card.Text>
+          {/* <Card.Text>
+            {this.state.lat && <Card.Text>Latitude: {this.state.lat}, Longitude: {this.state.lon}</Card.Text>}
+            </Card.Text> */}
         </Card.Body>
       </Card>
 
@@ -129,12 +135,12 @@ render() {
       </Card> */}
 
 
-      <Card className='card movieCard'>
-        <Card.Body className="cardContainer">
-          <Card.Title className="cardTitle">Movies in this City</Card.Title>
-          <Card.Text as="div">
-            {this.state.movies && <Movies movies={this.state.movies} />}
-            {this.state.movies.length === 0 && 'No movies found'}
+      <Card className='movieCard'>
+        <Card.Body className="movieBodyContainer">
+          <Card.Title className="movieCardTitle">Movies in this City</Card.Title>
+          <Card.Text as="div"className="moviePhrase">
+            {this.state.movies && <Movies movies={this.state.movies}/>}
+            {this.state.movies.length === 0 && 'Search for a city to see a list of movies!'}
           </Card.Text>
         </Card.Body>
       </Card>
