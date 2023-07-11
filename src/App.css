@@ -4,57 +4,58 @@
 } */
 
 body {
-  background-color: #283618;
+  background-color: #023047;
   /* text-align: center; */
   font-weight:700;
+  background-image: url("../public/images/background.jpeg"); 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  
 }
 
 li {
   list-style-type:circle;
 }
 
-.seachCityInput {
-  /* text-align: center; */
-  margin-left: 5px;
-}
-
 .searchCityLabel {
-  color:aliceblue;
+  color:rgb(0, 0, 0);
   text-align: center;
 }
 .mapCard {
-  background-color:#fefae0;
+  background-color:#219ebc;
   margin: 0 auto;
-  width: 70%;
+  width: 60%;
   margin-top: 30px;
-  border: 2px solid #dda15e;
+  border: 3px solid #023047;
 }
 
 .movieCard {
-  background-color:#fefae0;
+  background-color:#219ebc;
   margin: 0 auto;
-  width: 70%;
+  width: 60%;
   margin-top: 30px;
-  border: 2px solid #dda15e;
-}
-
-button {
-  margin-top: 5px;
-  display: block;
+  border: 3px solid #023047;
 }
 
 .cityExplorerLabel {
   padding: 10px;
-  color:#bc6c25;
-  background-color: #fefae0;
-  border: 2px solid #dda15e;
-  
+  color:#023047;
+  background-color: #219ebc;
+  border: 3px solid #023047;
+  font-size: 30px;
+  color: #023047;
 }
 
+.cityExplorerForm {
+  margin-left: 350px;
+
+}
 .cityExplorerH1 {
-  width: 90%;
+  width: 80%;
   color: rgb(7, 7, 7);
-  margin: 25px;
+  margin: 15px;
   color:#bc6c25;
   display: flex;
   flex-direction: row;
@@ -65,19 +66,19 @@ button {
   margin-bottom: 20px;
   font-size: 30px;
   margin: auto 0;
-  color:#bc6c25;
+  color: #023047;
   font-weight:500;
+  
 }
 
 .movieCardTitle {
-  color:#bc6c25;
+  color:#023047;
   font-size: 25px;
-  font-weight:500;
-
+  font-weight:500; 
 }
 
 .moviePhrase {
-  color:#bc6c25;
+  color:#023047;
   font-weight:500;
   font-size: 20px;
 }
@@ -85,11 +86,25 @@ iframe {
   margin: 0 auto;
   position: relative;
   display: block;
-  border:2px solid #283618;
+  border:2px solid #023047;
 }
 
+
 .exploreBtn {
-  color: rgb(25, 110, 1);
-  /* margin: 10px; */
+  color: #023047;
+  width: 15%;
   font-weight:400;
+  border-radius: 8%;
+  border: 2px solid;
+  border-image: linear-gradient(to right, #000080, #3cb4e8, #b0b0b0, #3cb4e8, #000080) 1;
+  border-image-slice: 1;
+  font-size: 20px;
+  background-color: white;
+}
+
+
+.exploreDiv {
+  margin: auto 0;
+  display: flex;
+  flex-direction: row;
 }
