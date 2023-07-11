@@ -9,7 +9,8 @@
 
 .insideMovieCard {
   margin-bottom: 30px;
- border: 2px solid rgb(57, 56, 56);
+ border: 2px solid #023047;
+
 }
 
 .movieReleased, .movieOverview {
@@ -21,6 +22,8 @@
   width: 90%;
   margin: 0 auto;
   margin-bottom: 10px !important;
+  background-color: #023047;
+  color: #219ebc;
 }
 
 .movieReleased {
@@ -31,5 +34,5 @@
   margin: 0 auto;
   font-weight: 800;
   font-size: 30px;
-  color:#bc6c25;
+  color:#023047;
 }

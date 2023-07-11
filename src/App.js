@@ -95,11 +95,13 @@ render() {
     <>
       <div className='exploreDiv'>
         <h1 className='cityExplorerH1'> 
-        <form onSubmit={this.handleCitySubmit}>
-          <label className="cityExplorerLabel"> Enter a City & Get Started:
+        <form onSubmit={this.handleCitySubmit} className='cityExplorerForm'>
+          <label className="cityExplorerLabel"> Enter a City & Start Exploring:
             <input className='seachCityInput' onChange={this.changeCityInput} name="city" />
           </label>
-           <button type="submit" className="exploreBtn"> Explore!</button>
+          <div class="container">
+            <button type="submit" className="exploreBtn"> Explore!</button>
+          </div>
         </form>
         </h1>
       </div>
@@ -107,7 +109,7 @@ render() {
       <Card className='mapCard'>
         <Card.Body className="mapCardContainer">
           <Card.Title   
-            className="mapCardTitle">City Name: {this.state.cityName}</Card.Title>
+            className="mapCardTitle">City Map: {this.state.cityName}</Card.Title>
           <Card.Text as="div">
             <div>
               {lat && lon && <iframe
