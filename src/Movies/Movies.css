@@ -8,8 +8,13 @@
 }
 
 .insideMovieCard {
+  margin: 0 auto;
   margin-bottom: 30px;
- border: 2px solid #023047;
+ /* border: 2px solid #023047; */
+ -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+ -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+ box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+ width: 90%;
 
 }
 
@@ -18,16 +23,17 @@
 }
 
 .movieOverview {
-  border: 2px solid #11170b;
   width: 90%;
   margin: 0 auto;
   margin-bottom: 10px !important;
-  background-color: #023047;
-  color: #219ebc;
+  /* background-color: #023047; */
+  color: #023047;
+  
 }
 
 .movieReleased {
   margin-left: 35px;
+  text-decoration: underline;
 }
 
 .movieTitle {
@@ -35,4 +41,5 @@
   font-weight: 800;
   font-size: 30px;
   color:#023047;
+  padding: 15px;
 }
