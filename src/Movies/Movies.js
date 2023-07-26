@@ -27,7 +27,7 @@ class Movies extends React.Component {
                   Released: {movie.release}
               </Card.Text>
               <Card.Text className='movieOverview'>
-                {movie.overview}
+                Overview: {movie.overview}
               </Card.Text>
             </Card>
         ))}

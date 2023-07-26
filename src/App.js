@@ -110,6 +110,7 @@ render() {
         <Card.Body className="mapCardContainer">
           <Card.Title   
             className="mapCardTitle">City Map: {this.state.cityName}</Card.Title>
+            
           <Card.Text as="div">
             <div>
               {lat && lon && <iframe
@@ -139,10 +140,10 @@ render() {
 
       <Card className='movieCard'>
         <Card.Body className="movieBodyContainer">
-          <Card.Title className="movieCardTitle">Movies in this City</Card.Title>
+          <Card.Title className="movieCardTitle">Movies in this City:</Card.Title>
           <Card.Text as="div"className="moviePhrase">
             {this.state.movies && <Movies movies={this.state.movies}/>}
-            {this.state.movies.length === 0 && 'Search for a city to see a list of movies!'}
+            {this.state.movies.length === 0 && 'Search for a city, then wait for us to retrieve a list of local movies!'}
           </Card.Text>
         </Card.Body>
       </Card>
